@@ -23,7 +23,7 @@ template<
     typename Yield,
     typename Resume,
     typename... Args>
-struct Gen;
+struct Generate;
 
 template<
     typename Yield,
@@ -92,7 +92,7 @@ struct Gen {
       Args...)>;
 
 public:
-  Gen(const BodyType &body, Args... args) {
+  Generate(const BodyType &body, Args... args) {
     std::mutex mut;
     std::unique_lock <std::mutex> _1(mut);
     std::condition_variable cv1;
@@ -121,7 +121,7 @@ public:
     cv1.wait(_1);
   }
 
-  ~Gen() {
+  ~Generate() {
     if (!ctx.done) {
       ctx.done = true;
       ctx.lock.unlock();
